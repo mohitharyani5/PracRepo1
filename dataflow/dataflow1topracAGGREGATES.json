@@ -1,0 +1,32 @@
+{
+	"name": "dataflow1topracAGGREGATES",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1fordeptsourcefile",
+						"type": "DatasetReference"
+					},
+					"name": "source1fordeptfile"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "output",
+						"type": "DatasetReference"
+					},
+					"name": "sinkforaggregatedout"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Aggregate1"
+				}
+			],
+			"script": "source(output(\n\t\tdeptid as string,\n\t\tdeptname as string,\n\t\tdeptaddress as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1fordeptfile\nsource1fordeptfile aggregate(groupBy(deptname),\n\tTotaldept = count(1)) ~> Aggregate1\nAggregate1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Totalaggregatedfile.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sinkforaggregatedout"
+		}
+	}
+}

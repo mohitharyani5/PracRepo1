@@ -1,0 +1,38 @@
+{
+	"name": "DelimitedText1fordeptsourcefile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservicefordeptfile",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "dept.csv",
+				"folderPath": "Input",
+				"container": "praccontainer1"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "deptid",
+				"type": "String"
+			},
+			{
+				"name": "deptname",
+				"type": "String"
+			},
+			{
+				"name": "deptaddress",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
